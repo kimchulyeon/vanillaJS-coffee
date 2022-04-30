@@ -1,4 +1,4 @@
-# ☕️ COFFEE PROJECT
+# ☕️ COFFEE PROJECT (Udemy)
 
 ## 요구 사항 분석
 
