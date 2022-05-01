@@ -37,6 +37,25 @@ const app = () => {
     updataMenuCount()
     inputEl.value = '' // Input 빈칸으로 되돌리기
   }
+  // 수정버튼
+  const editMenuName = (e) => {
+    if (e.target.className.includes('menu-edit-button')) {
+      const MENU_NAME = e.target.closest('li').querySelector('.menu-name')
+      let newMenu = prompt('메뉴명을 수정하세요', MENU_NAME.innerText)
+      MENU_NAME.innerText = newMenu
+    }
+  }
+  // 삭제버튼
+  const removeMenuName = (e) => {
+    if (e.target.className.includes('menu-remove-button')) {
+      const okDelete = confirm('메뉴를 삭제하시겠습니까?')
+      if (okDelete) {
+        // e.target.closest('li').style.display = 'none'
+        e.target.closest('li').remove()
+        updataMenuCount()
+      }
+    }
+  }
 
   // 페이지 새로고침 막기
   formEl.addEventListener('submit', (e) => {
@@ -59,21 +78,8 @@ const app = () => {
 
   // 수정 삭제 버튼 (이벤트 위임)
   ulEl.addEventListener('click', (e) => {
-    // 수정 버튼
-    if (e.target.className.includes('menu-edit-button')) {
-      const MENU_NAME = e.target.closest('li').querySelector('.menu-name')
-      let newMenu = prompt('메뉴명을 수정하세요', MENU_NAME.innerText)
-      MENU_NAME.innerText = newMenu
-    }
-    // 삭제 버튼
-    if (e.target.className.includes('menu-remove-button')) {
-      const okDelete = confirm('메뉴를 삭제하시겠습니까?')
-      if (okDelete) {
-        // e.target.closest('li').style.display = 'none'
-        e.target.closest('li').remove()
-        updataMenuCount()
-      }
-    }
+    editMenuName(e)
+    removeMenuName(e)
   })
 }
 
