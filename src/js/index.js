@@ -5,12 +5,14 @@ const app = () => {
   const inputEl = $('#espresso-menu-name')
   const formEl = $('#espresso-menu-form')
   const ulEl = $('#espresso-menu-list')
-  const menuCount = $('.menu-count')
   const confirmBtn = $('.input-submit')
-  const editBtn = $('.menu-edit-button')
-  const deleteBtn = $('.menu-delete-button')
-  const count = []
+  const menuCount = $('.menu-count')
 
+  // 메뉴 갯수 업데이터 (중복 제거 함수)
+  const updataMenuCount = () => {
+    const count = ulEl.querySelectorAll('li').length
+    menuCount.innerText = `총 ${count}개` // 총 갯수 표시
+  }
   // 메뉴 추가 과정 (중복 제거 함수)
   const menuAddProcess = () => {
     const menuName = inputEl.value
@@ -31,9 +33,8 @@ const app = () => {
       </li>`
     }
 
-    count.push(menuItemListTemplate(menuName)) // querySelectorAll로도 가능
-    ulEl.innerHTML += menuItemListTemplate(menuName) // insertAdjacentHTML도 가능
-    menuCount.innerText = `총 ${count.length}개` // 총 갯수 표시
+    ulEl.insertAdjacentHTML('beforeend', menuItemListTemplate(menuName)) // insertAdjacentHTML도 가능
+    updataMenuCount()
     inputEl.value = '' // Input 빈칸으로 되돌리기
   }
 
@@ -53,6 +54,25 @@ const app = () => {
   confirmBtn.addEventListener('click', () => {
     if (inputEl.value > 0) {
       menuAddProcess()
+    }
+  })
+
+  // 수정 삭제 버튼 (이벤트 위임)
+  ulEl.addEventListener('click', (e) => {
+    // 수정 버튼
+    if (e.target.className.includes('menu-edit-button')) {
+      const MENU_NAME = e.target.closest('li').querySelector('.menu-name')
+      let newMenu = prompt('메뉴명을 수정하세요', MENU_NAME.innerText)
+      MENU_NAME.innerText = newMenu
+    }
+    // 삭제 버튼
+    if (e.target.className.includes('menu-remove-button')) {
+      const okDelete = confirm('메뉴를 삭제하시겠습니까?')
+      if (okDelete) {
+        // e.target.closest('li').style.display = 'none'
+        e.target.closest('li').remove()
+        updataMenuCount()
+      }
     }
   })
 }
