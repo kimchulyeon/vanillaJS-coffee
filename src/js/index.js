@@ -4,6 +4,7 @@ const app = () => {
   const formEl = $('#espresso-menu-form')
   const ulEl = $('#espresso-menu-list')
   const addBtn = $('.input-submit')
+  const menuCount = $('.menu-count')
 
   const menuItem = (el) => {
     return `
@@ -23,13 +24,12 @@ const app = () => {
   }
 
   const updateMenuCount = () => {
-    const menuCount = $('.menu-count')
     const menuLength = ulEl.querySelectorAll('li').length
     menuCount.innerText = `총 ${menuLength}개`
   }
 
   const addMenuProcess = () => {
-    if (inputEl.value > 0) {
+    if (inputEl.value.length > 0) {
       ulEl.insertAdjacentHTML('beforeend', menuItem(inputEl.value))
       updateMenuCount()
       inputEl.value = ''
