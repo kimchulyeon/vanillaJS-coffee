@@ -21,10 +21,38 @@ const app = () => {
       </button>
     </li>`
   }
+
+  const updateMenuCount = () => {
+    const menuCount = $('.menu-count')
+    const menuLength = ulEl.querySelectorAll('li').length
+    menuCount.innerText = `총 ${menuLength}개`
+  }
+
   const addMenuProcess = () => {
     if (inputEl.value > 0) {
       ulEl.insertAdjacentHTML('beforeend', menuItem(inputEl.value))
+      updateMenuCount()
       inputEl.value = ''
+    }
+  }
+
+  const removeMenu = (e) => {
+    if (e.target.className.includes('menu-remove')) {
+      const okRemove = confirm('메뉴를 삭제하시겠습니까?')
+      if (okRemove) {
+        $('.menu-list').remove()
+        updateMenuCount()
+      }
+    }
+  }
+
+  const editMenu = (e) => {
+    if (e.target.className.includes('menu-edit')) {
+      const result = prompt(
+        '메뉴 이름을 작성하시오.',
+        e.target.closest('li').querySelector('.menu-name').innerText
+      )
+      e.target.closest('li').querySelector('.menu-name').innerText = result
     }
   }
 
@@ -43,6 +71,10 @@ const app = () => {
   addBtn.addEventListener('click', addMenuProcess)
 
   // 삭제 수정 버튼
+  ulEl.addEventListener('click', (e) => {
+    removeMenu(e)
+    editMenu(e)
+  })
 }
 
 app()
