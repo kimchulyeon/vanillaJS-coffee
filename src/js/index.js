@@ -6,6 +6,7 @@ const app = () => {
   const addBtn = $('.input-submit')
   const menuCount = $('.menu-count')
 
+  // 추가될 메뉴 리스트
   const menuItem = (el) => {
     return `
     <li class='menu-list d-flex items-center py-2'>
@@ -23,11 +24,13 @@ const app = () => {
     </li>`
   }
 
+  // 추가된 메뉴 갯수 카운팅
   const updateMenuCount = () => {
     const menuLength = ulEl.querySelectorAll('li').length
     menuCount.innerText = `총 ${menuLength}개`
   }
 
+  // 메뉴 추가 함수
   const addMenuProcess = () => {
     if (inputEl.value.length > 0) {
       ulEl.insertAdjacentHTML('beforeend', menuItem(inputEl.value))
@@ -36,6 +39,7 @@ const app = () => {
     }
   }
 
+  // 메뉴 제거 함수
   const removeMenu = (e) => {
     if (e.target.className.includes('menu-remove')) {
       const okRemove = confirm('메뉴를 삭제하시겠습니까?')
@@ -46,6 +50,7 @@ const app = () => {
     }
   }
 
+  // 메뉴 수정 함수
   const editMenu = (e) => {
     if (e.target.className.includes('menu-edit')) {
       const result = prompt(
@@ -56,6 +61,7 @@ const app = () => {
     }
   }
 
+  // form.preventDefault
   formEl.addEventListener('submit', (e) => {
     e.preventDefault()
   })
